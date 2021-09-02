@@ -129,9 +129,11 @@ app.get("/account", verifyIfExistsAccountCPF, (request, response) => {
 });
 
 app.delete("/account", verifyIfExistsAccountCPF, (request, response) => {
-  const {customer } = request;
+  const { customer } = request;
 
-  customers.splice(customer, 1);
+  const indexCustomer = customers.findIndex((customerIndex) => customerIndex.cpf === customer.cpf);
+
+  customers.splice(indexCustomer, 1);
 
   return response.status(200).json(customers);
 });
@@ -139,7 +141,7 @@ app.delete("/account", verifyIfExistsAccountCPF, (request, response) => {
 app.get("/balance", verifyIfExistsAccountCPF, (request, response) => {
   const { customer } = request;
 
-  const balance = getBalance(customer. statement);
+  const balance = getBalance(customer.statement);
 
   return response.json(balance);
 });
